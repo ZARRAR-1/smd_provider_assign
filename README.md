@@ -1,6 +1,6 @@
 # smd_provider_assign
 
-A new Flutter project.
+Made by k191069 Abeer Hussain, k191056 Anish Rajput, k191095 Ma'arij Abdul Qadir. 
 
 ## Getting Started
 
