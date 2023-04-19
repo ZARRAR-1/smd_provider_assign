@@ -6,7 +6,7 @@ import 'cart_model.dart';
 
 class MyCart extends StatelessWidget {
   // const MyCart({super.key});
-  MyCart({Key? key}) : super(key: key);
+  const MyCart({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

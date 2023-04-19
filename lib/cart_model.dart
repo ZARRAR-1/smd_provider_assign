@@ -58,5 +58,4 @@ class CartModel extends ChangeNotifier{
     // you change the model.
     notifyListeners();
   }
-
 }

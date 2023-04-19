@@ -11,15 +11,22 @@ class MyCatalog extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          _MyAppBar(),
-          const SliverToBoxAdapter(child: SizedBox(height: 12)),
-          SliverList(
-            delegate: SliverChildBuilderDelegate(
-                (context, index) => _MyListItem(index)),
-          ),
-        ],
+      body: ChangeNotifierProvider(
+        create: (BuildContext context) {
+          return CatlogModel();
+        },
+        child: CustomScrollView(
+          slivers: [
+            _MyAppBar(),
+            const SliverToBoxAdapter(
+              child: SizedBox(height: 12),
+            ),
+            SliverList(
+              delegate: SliverChildBuilderDelegate(
+                  (context, index) => _MyListItem(index)),
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -38,13 +45,17 @@ class _AddButton extends StatelessWidget {
     // this widget unless that particular part of the model changes.
     //
     // This can lead to significant performance improvements.
-    var isInCart = context.select<CartModel, bool>(
-      // Here, we are only interested whether [item] is inside the cart.
-      (cart) => cart.items.contains(item),
-    );
+
+    //Commented by Me:
+    // var isInCart = context.select<CartModel, bool>(
+    //   // Here, we are only interested whether [item] is inside the cart.
+    //   (cart) => cart.items.contains(item),
+    // );
+    var myCart = Provider.of<CartModel>(context, listen: false);
+    bool isInMyCart = myCart.items.contains(item);
 
     return TextButton(
-      onPressed: isInCart
+      onPressed: isInMyCart
           ? null
           : () {
               // If the item is not in cart, we let the user add it.
@@ -53,8 +64,8 @@ class _AddButton extends StatelessWidget {
               // words, it is executed outside the build method.
 
               // var cart = context.read<CartModel>();
-        var cart = Provider.of<CartModel>(context);
-        cart.add(item);
+              var cart = Provider.of<CartModel>(context, listen: false);
+              cart.add(item);
             },
       style: ButtonStyle(
         overlayColor: MaterialStateProperty.resolveWith<Color?>((states) {
@@ -64,7 +75,7 @@ class _AddButton extends StatelessWidget {
           return null; // Defer to the widget's default.
         }),
       ),
-      child: isInCart
+      child: isInMyCart
           ? const Icon(Icons.check, semanticLabel: 'ADDED')
           : const Text('ADD'),
     );

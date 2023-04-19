@@ -4,17 +4,15 @@ import 'cart_model.dart';
 import 'catalog_screen.dart';
 
 void main() {
-  // runApp(const MyApp());
-    runApp(
-      MultiProvider(
-        providers: [
-          ChangeNotifierProvider(create: (context) => CartModel()),
-        ],
-        child: const MyApp(),
-      ),
-    );
-  }
-
+  runApp(
+    ChangeNotifierProvider(
+      create: (BuildContext context) {
+        return CartModel();
+      },
+      child: const MyApp(),
+    ),
+  );
+}
 
 class MyApp extends StatelessWidget {
   const MyApp({Key? key});
@@ -24,7 +22,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return const MaterialApp(
       title: 'Provide-Shopping Cart',
-
       home: MyCatalog(),
     );
   }
